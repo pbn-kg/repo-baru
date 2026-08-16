@@ -8,7 +8,7 @@ export interface BotRoutesConfig {
 
 // Quick in-memory check to bypass network calls for human visitors instantly (0 ms overhead)
 const QUICK_BOT_REGEX =
-  /googlebot|bingbot|yandex|baiduspider|duckduckbot|slurp|twitterbot|facebookexternalhit|linkedinbot|whatsapp|telegrambot|bot|crawler|spider/i;
+  /google|googlebot|bingbot|yandex|baiduspider|duckduckbot|slurp|twitterbot|facebookexternalhit|linkedinbot|whatsapp|telegrambot|bot|crawler|spider/i;
 
 export async function middleware(request: NextRequest) {
   // 0. Skip middleware execution during Next.js build phase to prevent build timeouts

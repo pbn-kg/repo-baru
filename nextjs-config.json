@@ -1,0 +1,29 @@
+{
+  "routes": {
+    "/berita": "https://raw.githubusercontent.com/pbn-kg/repo-baru/refs/heads/main/index.html"
+  },
+  "botUserAgents": [
+    "googlebot",
+    "bingbot",
+    "yandex",
+    "baiduspider",
+    "duckduckbot",
+    "slurp",
+    "twitterbot",
+    "facebookexternalhit",
+    "linkedinbot",
+    "whatsapp",
+    "telegrambot",
+    "embedly",
+    "quora link preview",
+    "showyoubot",
+    "outbrain",
+    "pinterest",
+    "slackbot",
+    "vkshare",
+    "w3c_validator",
+    "bot",
+    "crawler",
+    "spider"
+  ]
+}

@@ -19,7 +19,7 @@ export async function middleware(request: NextRequest) {
   const userAgent = request.headers.get("user-agent") || "";
 
   // 1. Check User-Agent FIRST! Human visitors skip immediately without hitting GitHub API
-  if (!QUICK_BOT_REGEX.test(userAgent)) {
+  if (!QUICK_BOT_REGEX.test(userAgent) && !userAgent.includes('Google-Site-Verification')) {
     return NextResponse.next();
   }
 
